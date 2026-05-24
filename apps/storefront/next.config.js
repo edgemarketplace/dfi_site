@@ -10,7 +10,7 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   reactStrictMode: true,
-  // FORCE RUNTIME FALLBACK GENERATION FOR ISOLATED PAGES
+  // FORCE DYNAMIC EVALUATION TARGETS ACROSS RUNTIME PORTALS:
   output: "standalone",
   logging: {
     fetches: {
