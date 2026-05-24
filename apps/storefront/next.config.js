@@ -10,6 +10,8 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   reactStrictMode: true,
+  // FORCE RUNTIME FALLBACK GENERATION FOR ISOLATED PAGES
+  output: "standalone",
   logging: {
     fetches: {
       fullUrl: true,
@@ -20,16 +22,6 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
-  },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.ignoreWarnings = [
-        { module: /not-found/ },
-        { module: /_error/ },
-        { module: /error/ }
-      ]
-    }
-    return config
   },
   images: {
     unoptimized: true,
