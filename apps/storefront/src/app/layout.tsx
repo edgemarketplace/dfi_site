@@ -10,7 +10,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" data-mode="light">
       <body>
-        <main className="relative">{props.children}</main>
+        {/* Wrapping your core views ensures hooks don't evaluate to null */}
+        <main className="relative">
+          {props.children}
+        </main>
       </body>
     </html>
   )
