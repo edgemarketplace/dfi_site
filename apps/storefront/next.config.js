@@ -10,8 +10,11 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   reactStrictMode: true,
-  // FORCE DYNAMIC EVALUATION TARGETS ACROSS RUNTIME PORTALS:
+  // FORCE ALL DYNAMIC PAGES TO SKIPPED HOOK BINDINGS DURING COMPILATION:
   output: "standalone",
+  experimental: {
+    dynamicIO: false,
+  },
   logging: {
     fetches: {
       fullUrl: true,
