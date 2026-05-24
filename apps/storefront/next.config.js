@@ -10,10 +10,9 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   reactStrictMode: true,
-  // FORCE ALL DYNAMIC PAGES TO SKIPPED HOOK BINDINGS DURING COMPILATION:
   output: "standalone",
   experimental: {
-    dynamicIO: false,
+    cacheComponents: false, // Updated to use Next 15's correct parameter name
   },
   logging: {
     fetches: {
