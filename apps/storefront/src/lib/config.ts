@@ -1,11 +1,29 @@
 import { getLocaleHeader } from "@lib/util/get-locale-header"
 import Medusa, { FetchArgs, FetchInput } from "@medusajs/js-sdk"
 
-// Defaults to standard port for Medusa server
-let MEDUSA_BACKEND_URL = "http://localhost:9000"
+const MEDUSA_BACKEND_URL =
+  process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
 
-if (process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL) {
-  MEDUSA_BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
+if (process.env.NODE_ENV === "production") {
+  if (!process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL) {
+    throw new Error(
+      "NEXT_PUBLIC_MEDUSA_BACKEND_URL must be set in production to avoid falling back to localhost:9000"
+    )
+  }
+
+  const backendHostname = (() => {
+    try {
+      return new URL(MEDUSA_BACKEND_URL).hostname
+    } catch {
+      return null
+    }
+  })()
+
+  if (["localhost", "127.0.0.1", "0.0.0.0"].includes(backendHostname || "")) {
+    throw new Error(
+      "NEXT_PUBLIC_MEDUSA_BACKEND_URL cannot point to a local host in production"
+    )
+  }
 }
 
 export const sdk = new Medusa({
