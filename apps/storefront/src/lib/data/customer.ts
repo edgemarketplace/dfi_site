@@ -109,13 +109,30 @@ export async function login(_currentState: unknown, formData: FormData) {
   const password = formData.get("password") as string
 
   try {
-    await sdk.auth
-      .login("customer", "emailpass", { email, password })
-      .then(async (token) => {
-        await setAuthToken(token as string)
-        const customerCacheTag = await getCacheTag("customers")
-        revalidateTag(customerCacheTag)
+    const token = await sdk.auth.login("customer", "emailpass", { email, password })
+
+    const customer = await sdk.client
+      .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       })
+      .then(({ customer }) => customer)
+      .catch(() => null)
+
+    if (!customer) {
+      await removeAuthToken()
+      return [
+        "This login is valid for the Medusa admin, but it is not connected",
+        "to a storefront customer account. Use a customer account, or register",
+        "as a new storefront member with a different email address.",
+      ].join(" ")
+    }
+
+    await setAuthToken(token as string)
+    const customerCacheTag = await getCacheTag("customers")
+    revalidateTag(customerCacheTag)
   } catch (error) {
     return String(error)
   }
@@ -125,6 +142,8 @@ export async function login(_currentState: unknown, formData: FormData) {
   } catch (error) {
     return String(error)
   }
+
+  redirect("/account")
 }
 
 export async function signout(countryCode: string) {
