@@ -3,8 +3,30 @@ const checkEnvVariables = require("./check-env-variables")
 
 checkEnvVariables()
 
+const MEDUSA_BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
 const S3_HOSTNAME = process.env.MEDUSA_CLOUD_S3_HOSTNAME
 const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
+
+const medusaRemotePatterns = (() => {
+  if (!MEDUSA_BACKEND_URL) {
+    return []
+  }
+
+  try {
+    const backendUrl = new URL(MEDUSA_BACKEND_URL)
+
+    return [
+      {
+        protocol: backendUrl.protocol.replace(":", ""),
+        hostname: backendUrl.hostname,
+        ...(backendUrl.port ? { port: backendUrl.port } : {}),
+        pathname: "/static/**",
+      },
+    ]
+  } catch {
+    return []
+  }
+})()
 
 /**
  * @type {import('next').NextConfig}
@@ -33,6 +55,7 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
       },
+      ...medusaRemotePatterns,
       {
         protocol: "https",
         hostname: "*.s3.*.amazonaws.com",
