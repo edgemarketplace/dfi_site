@@ -1,157 +1,94 @@
-import { listCategories } from "@lib/data/categories";
-import { listCollections } from "@lib/data/collections";
-import { Text, clx } from "@modules/common/components/ui";
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { Text } from "@modules/common/components/ui"
 
-import LocalizedClientLink from "@modules/common/components/localized-client-link";
-import MedusaCTA from "@modules/layout/components/medusa-cta";
+const usefulLinks = [
+  { label: "Home", href: "/" },
+  { label: "Shop", href: "/store" },
+  { label: "Account", href: "/account" },
+  { label: "Cart", href: "/cart" },
+]
 
 export default async function Footer() {
-  const { collections } = await listCollections({
-    fields: "*products",
-  });
-  const productCategories = await listCategories();
-
   return (
-    <footer className="border-t border-ui-border-base w-full">
+    <footer className="border-t border-stone-200 bg-stone-950 text-white">
       <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
+        <div className="grid gap-12 py-16 small:py-24 large:grid-cols-[1.2fr_0.8fr_1fr]">
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="txt-compact-xlarge-plus uppercase tracking-[0.25em] text-white hover:text-amber-300"
             >
-              Medusa Store
+              Defend Freedom Industries
             </LocalizedClientLink>
+            <p className="mt-5 max-w-md text-sm leading-7 text-stone-300">
+              Apparel and custom gear honoring the men and women who put everything on the line to keep our communities safe and our nation free.
+            </p>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
-            {productCategories && productCategories?.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Categories
-                </span>
-                <ul
-                  className="grid grid-cols-1 gap-2"
-                  data-testid="footer-categories"
-                >
-                  {productCategories?.slice(0, 6).map((c) => {
-                    if (c.parent_category) {
-                      return;
-                    }
 
-                    const children =
-                      c.category_children?.map((child) => ({
-                        name: child.name,
-                        handle: child.handle,
-                        id: child.id,
-                      })) || null;
-
-                    return (
-                      <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
-                        key={c.id}
-                      >
-                        <LocalizedClientLink
-                          className={clx(
-                            "hover:text-ui-fg-base",
-                            children && "txt-small-plus"
-                          )}
-                          href={`/categories/${c.handle}`}
-                          data-testid="category-link"
-                        >
-                          {c.name}
-                        </LocalizedClientLink>
-                        {children && (
-                          <ul className="grid grid-cols-1 ml-3 gap-2">
-                            {children &&
-                              children.map((child) => (
-                                <li key={child.id}>
-                                  <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
-                                    href={`/categories/${child.handle}`}
-                                    data-testid="category-link"
-                                  >
-                                    {child.name}
-                                  </LocalizedClientLink>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            )}
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Collections
-                </span>
-                <ul
-                  className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
-                    {
-                      "grid-cols-2": (collections?.length || 0) > 3,
-                    }
-                  )}
+          <div>
+            <h5 className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-amber-400">
+              Useful Links
+            </h5>
+            <ul className="grid grid-cols-1 gap-3 text-sm text-stone-300">
+              {usefulLinks.map((link) => (
+                <li key={link.href}>
+                  <LocalizedClientLink
+                    href={link.href}
+                    className="hover:text-amber-300"
+                  >
+                    {link.label}
+                  </LocalizedClientLink>
+                </li>
+              ))}
+              <li>
+                <a
+                  href="mailto:defendfreedomindustries@gmail.com"
+                  className="hover:text-amber-300"
                 >
-                  {collections?.slice(0, 6).map((c) => (
-                    <li key={c.id}>
-                      <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
-                        href={`/collections/${c.handle}`}
-                      >
-                        {c.title}
-                      </LocalizedClientLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>
-                  <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/medusajs/dtc-starter"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Source code
-                  </a>
-                </li>
-              </ul>
+                  Contact us
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h5 className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-amber-400">
+              About us
+            </h5>
+            <div className="space-y-4 text-sm leading-7 text-stone-300">
+              <p>
+                At <strong className="text-white">DEFEND FREEDOM INDUSTRIES</strong>, we believe the uniform doesn’t come off when the shift ends.
+              </p>
+              <p>
+                Every stitch represents courage, sacrifice, and commitment — on duty, off duty, and in the community.
+              </p>
+            </div>
+            <div className="mt-6 space-y-2 text-sm text-stone-300">
+              <h5 className="font-bold uppercase tracking-[0.25em] text-amber-400">
+                Connect with us
+              </h5>
+              <a
+                href="mailto:defendfreedomindustries@gmail.com"
+                className="block hover:text-amber-300"
+              >
+                defendfreedomindustries@gmail.com
+              </a>
+              <a href="tel:+19283026668" className="block hover:text-amber-300">
+                +1 (928) 302-6668
+              </a>
             </div>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
+
+        <div className="flex w-full flex-col gap-4 border-t border-white/10 py-8 text-stone-400 small:flex-row small:items-center small:justify-between">
           <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Medusa Store. All rights reserved.
+            © {new Date().getFullYear()} Defend Freedom Industries. All rights reserved.
           </Text>
-          <MedusaCTA />
+          <Text className="txt-compact-small">
+            Powered by Medusa commerce.
+          </Text>
         </div>
       </div>
     </footer>
-  );
+  )
 }
