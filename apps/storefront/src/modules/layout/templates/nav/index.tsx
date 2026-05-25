@@ -16,8 +16,20 @@ export default async function Nav() {
   ])
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
+    <div className="sticky top-0 inset-x-0 z-50 group bg-white">
+      <div className="bg-stone-950 text-white">
+        <div className="content-container flex h-10 items-center justify-center text-center text-[11px] font-medium uppercase tracking-[0.18em] small:justify-between">
+          <span className="hidden small:inline">Welcome to Defend Freedom Industries</span>
+          <span>Custom team stores and apparel drops available now</span>
+          <a
+            href="mailto:defendfreedomindustries@gmail.com"
+            className="hidden underline underline-offset-4 small:inline"
+          >
+            Contact Us
+          </a>
+        </div>
+      </div>
+      <header className="relative h-20 mx-auto border-b duration-200 bg-white border-ui-border-base">
         <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
@@ -31,7 +43,7 @@ export default async function Nav() {
               className="txt-compact-xlarge-plus hover:text-amber-600 uppercase tracking-[0.22em]"
               data-testid="nav-store-link"
             >
-              DFI
+              Defend Freedom Industries
             </LocalizedClientLink>
           </div>
 
