@@ -54,9 +54,7 @@ const Hero = () => {
               Modern custom apparel
             </p>
             <h1 className="text-5xl font-black leading-none tracking-tight small:text-7xl">
-              Soft Comfort
-              <br />
-              Bold Purpose
+              Built for those who serve
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-white/85 small:text-lg">
               Premium gear for first responders, military personnel, teams, and community organizations — built to represent the people who show up.
@@ -138,7 +136,6 @@ const Hero = () => {
             className="absolute inset-0 h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
             <p className="text-xs font-bold uppercase tracking-[0.32em] text-white/80">
               Team collections
