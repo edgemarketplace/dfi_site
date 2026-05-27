@@ -17,6 +17,7 @@ type ProductActionsProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
   disabled?: boolean
+  selectedVariantId?: string
 }
 
 const optionsAsKeymap = (
@@ -28,25 +29,42 @@ const optionsAsKeymap = (
   }, {})
 }
 
+const getInitialOptions = (
+  product: HttpTypes.StoreProduct,
+  selectedVariantId?: string
+) => {
+  if (product.variants?.length === 1) {
+    return optionsAsKeymap(product.variants[0].options) ?? {}
+  }
+
+  if (!selectedVariantId || !product.variants?.length) {
+    return {}
+  }
+
+  const variant = product.variants.find((v) => v.id === selectedVariantId)
+
+  return variant ? (optionsAsKeymap(variant.options) ?? {}) : {}
+}
+
 export default function ProductActions({
   product,
   disabled,
+  selectedVariantId,
 }: ProductActionsProps) {
   const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const pathname = usePathname() ?? ""
+  const searchParams = useSearchParams() ?? new URLSearchParams()
 
-  const [options, setOptions] = useState<Record<string, string | undefined>>({})
+  const [options, setOptions] = useState<Record<string, string | undefined>>(() =>
+    getInitialOptions(product, selectedVariantId)
+  )
   const [isAdding, setIsAdding] = useState(false)
-  const countryCode = useParams().countryCode as string
+  const { countryCode = "" } = (useParams() ?? {}) as { countryCode?: string }
 
   // If there is only 1 variant, preselect the options
   useEffect(() => {
-    if (product.variants?.length === 1) {
-      const variantOptions = optionsAsKeymap(product.variants[0].options)
-      setOptions(variantOptions ?? {})
-    }
-  }, [product.variants])
+    setOptions(getInitialOptions(product, selectedVariantId))
+  }, [product, selectedVariantId])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
@@ -90,7 +108,7 @@ export default function ProductActions({
     }
 
     router.replace(pathname + "?" + params.toString())
-  }, [selectedVariant, isValidVariant])
+  }, [isValidVariant, pathname, router, searchParams, selectedVariant])
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {

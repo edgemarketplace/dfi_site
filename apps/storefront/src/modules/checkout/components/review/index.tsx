@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 
 const Review = ({ cart }: { cart: HttpTypes.StoreCart }) => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams() ?? new URLSearchParams()
 
   const isOpen = searchParams.get("step") === "review"
 
