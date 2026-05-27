@@ -13,7 +13,7 @@ type RefinementListProps = {
 
 const RefinementList = ({ sortBy, 'data-testid': dataTestId }: RefinementListProps) => {
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ""
   const searchParams = useSearchParams() ?? new URLSearchParams()
 
   const createQueryString = useCallback(
