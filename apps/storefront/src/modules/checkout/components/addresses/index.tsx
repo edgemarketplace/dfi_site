@@ -21,9 +21,9 @@ const Addresses = ({
   cart: HttpTypes.StoreCart | null
   customer: HttpTypes.StoreCustomer | null
 }) => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams() ?? new URLSearchParams()
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ""
 
   const isOpen = searchParams.get("step") === "address"
 
