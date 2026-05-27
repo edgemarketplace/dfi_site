@@ -59,7 +59,9 @@ export default function ProductActions({
     getInitialOptions(product, selectedVariantId)
   )
   const [isAdding, setIsAdding] = useState(false)
-  const { countryCode = "" } = (useParams() ?? {}) as { countryCode?: string }
+  const _params = useParams() ?? {}
+  const _rawCc = _params.countryCode
+  const countryCode = Array.isArray(_rawCc) ? _rawCc[0] : (typeof _rawCc === 'string' ? _rawCc : '')
 
   // If there is only 1 variant, preselect the options
   useEffect(() => {
