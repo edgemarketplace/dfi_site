@@ -43,12 +43,6 @@ const nextConfig = {
       fullUrl: true,
     },
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -56,6 +50,11 @@ const nextConfig = {
         hostname: "localhost",
       },
       ...medusaRemotePatterns,
+      {
+        protocol: "https",
+        hostname: "nzxedlagqtzadyrmgkhq.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
       {
         protocol: "https",
         hostname: "*.s3.*.amazonaws.com",
