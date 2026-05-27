@@ -38,9 +38,9 @@ const Payment = ({
     activeSession?.provider_id ?? ""
   )
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams() ?? new URLSearchParams()
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ""
 
   const isOpen = searchParams.get("step") === "payment"
 
@@ -63,7 +63,7 @@ const Payment = ({
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams)
+      const params = new URLSearchParams(searchParams?.toString())
       params.set(name, value)
 
       return params.toString()
