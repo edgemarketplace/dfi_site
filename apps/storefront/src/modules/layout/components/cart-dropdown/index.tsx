@@ -36,6 +36,7 @@ const CartDropdown = ({
     }, 0) || 0
 
   const subtotal = cartState?.subtotal ?? 0
+  const pathname = usePathname() ?? ""
   const itemRef = useRef<number>(totalItems || 0)
 
   const timedOpen = () => {
@@ -65,11 +66,11 @@ const CartDropdown = ({
 
 
   useEffect(() => {
-    if (itemRef.current !== totalItems && !(usePathname() ?? "").includes("/cart")) {
+    if (itemRef.current !== totalItems && !pathname.includes("/cart")) {
       timedOpen()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalItems, itemRef.current])
+  }, [pathname, totalItems, itemRef.current])
 
   return (
     <div
