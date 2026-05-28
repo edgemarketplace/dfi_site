@@ -41,7 +41,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       )}
       data-testid={dataTestid}
     >
-      <ImageOrPlaceholder image={initialImage} size={size} />
+      <ImageOrPlaceholder image={initialImage ?? undefined} size={size} />
     </Container>
   )
 }
