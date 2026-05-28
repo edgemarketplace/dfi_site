@@ -27,48 +27,73 @@ const servicePromises = [
   {
     title: "Custom Team Stores",
     copy: "Dedicated apparel drops for departments, teams, academies, and local brands.",
+    icon: (
+      <svg className="w-8 h-8 text-amber-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+    )
   },
   {
     title: "Duty-Ready Quality",
     copy: "Comfortable pieces designed for long shifts, community events, and everyday wear.",
+    icon: (
+      <svg className="w-8 h-8 text-amber-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    )
   },
   {
     title: "Personal Support",
     copy: "Work directly with DFI for sizing, artwork, fulfillment, and custom order questions.",
+    icon: (
+      <svg className="w-8 h-8 text-amber-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+    )
   },
 ]
 
 const Hero = () => {
   return (
-    <div className="bg-white text-stone-950">
-      <section className="content-container py-6 small:py-10">
-        <div className="relative min-h-[74vh] overflow-hidden rounded-[2rem] bg-stone-950">
+    <div className="bg-stone-50 text-stone-900 min-h-screen font-sans selection:bg-amber-500/30 selection:text-stone-900">
+      {/* Hero Banner Section */}
+      <section className="content-container py-8 small:py-12">
+        <div className="relative min-h-[80vh] overflow-hidden rounded-[2.5rem] bg-stone-950 shadow-2xl group/hero">
+          {/* Background Image with Ken Burns zoom effect on hover */}
           <img
             src="https://www.defendfreedomindustries.com/web/image/4778-12d826bd/IMG_8622.webp"
             alt="Defend Freedom Industries custom apparel"
-            className="absolute inset-0 h-full w-full object-cover opacity-60"
+            className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-1000 ease-out scale-100 group-hover/hero:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/10" />
-          <div className="relative z-10 flex min-h-[74vh] max-w-3xl flex-col justify-center px-6 py-16 text-white small:px-16">
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.42em] text-white/80">
-              Modern custom apparel
+          {/* Dynamic dark gradient filter for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-900/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent" />
+          
+          <div className="relative z-10 flex min-h-[80vh] max-w-3xl flex-col justify-center px-8 py-20 text-white small:px-20">
+            {/* Custom high-end text spacing */}
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.45em] text-amber-500 animate-pulse">
+              Modern Custom Apparel
             </p>
-            <h1 className="text-5xl font-black leading-none tracking-tight small:text-7xl">
-              Built for those who serve
+            <h1 className="text-5xl font-black leading-none tracking-tight small:text-7.5xl text-stone-50">
+              Built For Those
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">
+                Who Serve
+              </span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-white/85 small:text-lg">
+            <p className="mt-8 max-w-xl text-base leading-relaxed text-stone-300 small:text-lg">
               Premium gear for first responders, military personnel, teams, and community organizations — built to represent the people who show up.
             </p>
-            <div className="mt-10 flex flex-col gap-3 small:flex-row">
+            <div className="mt-12 flex flex-col gap-4 small:flex-row">
               <LocalizedClientLink
                 href="/store"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-bold uppercase tracking-widest text-stone-950 transition hover:bg-stone-100"
+                className="inline-flex h-13 items-center justify-center rounded-full bg-amber-500 px-10 text-sm font-bold uppercase tracking-widest text-stone-950 hover:bg-amber-400 active:scale-98 transition-all duration-300 shadow-lg shadow-amber-500/20"
               >
                 Shop Collection
               </LocalizedClientLink>
               <a
                 href="mailto:defendfreedomindustries@gmail.com"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/50 px-8 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-white hover:text-stone-950"
+                className="inline-flex h-13 items-center justify-center rounded-full border-2 border-white/30 backdrop-blur-sm px-10 text-sm font-bold uppercase tracking-widest text-white hover:border-white hover:bg-white/10 active:scale-98 transition-all duration-300"
               >
                 Custom Orders
               </a>
@@ -77,25 +102,37 @@ const Hero = () => {
         </div>
       </section>
 
-      <section className="content-container py-14 text-center small:py-20">
-        <p className="mx-auto max-w-2xl text-sm leading-6 text-stone-500">
-          Express your organization’s identity with standout apparel — clean design, reliable comfort, and a refined retail experience.
-        </p>
-        <h2 className="mt-4 text-3xl font-black tracking-tight small:text-4xl">
-          Shop By Category
-        </h2>
-        <div className="mt-10 grid grid-cols-2 gap-5 small:grid-cols-5">
+      {/* Shop By Category Section */}
+      <section className="content-container py-16 text-center small:py-24">
+        <div className="max-w-2xl mx-auto">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600 mb-3">
+            Explore the line
+          </p>
+          <h2 className="text-3xl font-black tracking-tight small:text-5xl text-stone-900 mb-6">
+            Shop By Category
+          </h2>
+          <div className="h-1 w-12 bg-amber-500 mx-auto rounded-full mb-6" />
+          <p className="text-sm leading-relaxed text-stone-500 mb-14">
+            Express your organization’s identity with standout apparel — clean design, reliable comfort, and a refined retail experience.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-6 small:grid-cols-5 max-w-6xl mx-auto">
           {clientCategories.map((category) => (
-            <LocalizedClientLink href="/store" key={category.name} className="group block">
-              <div className="aspect-square overflow-hidden rounded-full bg-stone-100">
+            <LocalizedClientLink 
+              href="/store" 
+              key={category.name} 
+              className="group block relative p-4 rounded-3xl bg-white border border-stone-100 hover:border-amber-500/30 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
+            >
+              <div className="aspect-square overflow-hidden rounded-2xl bg-stone-100 shadow-inner">
                 <img
                   src={category.image}
                   alt={category.name}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-500 scale-100 group-hover:scale-105"
                   loading="lazy"
                 />
               </div>
-              <p className="mt-4 text-sm font-bold uppercase tracking-wide text-stone-900 group-hover:underline">
+              <p className="mt-4 text-xs font-bold uppercase tracking-wider text-stone-800 transition-colors duration-200 group-hover:text-amber-600">
                 {category.name}
               </p>
             </LocalizedClientLink>
@@ -103,24 +140,25 @@ const Hero = () => {
         </div>
       </section>
 
-      <section className="content-container grid gap-6 py-8 small:grid-cols-2 small:py-12">
+      {/* Highlights / Collections Grid */}
+      <section className="content-container grid gap-8 py-10 small:grid-cols-2 small:py-16">
         <LocalizedClientLink
           href="/store"
-          className="group relative min-h-[420px] overflow-hidden rounded-[1.5rem] bg-stone-900"
+          className="group relative min-h-[460px] overflow-hidden rounded-[2rem] bg-stone-950 shadow-xl"
         >
           <img
             src="https://www.defendfreedomindustries.com/web/image/4775-2a9997c1/15047.webp"
             alt="Henderson Fire apparel"
-            className="absolute inset-0 h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-700 scale-100 group-hover:scale-103"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-white/80">
-              Department apparel
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-10 text-center text-white flex flex-col items-center">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-amber-500 mb-2">
+              Department Apparel
             </p>
-            <h3 className="mt-3 text-4xl font-black tracking-tight">On-Duty Essentials</h3>
-            <span className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-white px-7 text-sm font-bold uppercase tracking-widest text-stone-950">
+            <h3 className="text-3xl font-black tracking-tight small:text-4xl text-stone-100">On-Duty Essentials</h3>
+            <span className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-white px-8 text-xs font-bold uppercase tracking-widest text-stone-950 hover:bg-amber-500 hover:text-stone-950 hover:shadow-lg transition-all duration-300">
               Shop Now
             </span>
           </div>
@@ -128,70 +166,87 @@ const Hero = () => {
 
         <LocalizedClientLink
           href="/store"
-          className="group relative min-h-[420px] overflow-hidden rounded-[1.5rem] bg-stone-900"
+          className="group relative min-h-[460px] overflow-hidden rounded-[2rem] bg-stone-950 shadow-xl"
         >
           <img
             src="https://www.defendfreedomindustries.com/unsplash/aMuXhFkbxEw/4796/baseball.jpg?unique=5b1288a4"
             alt="Team apparel"
-            className="absolute inset-0 h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-700 scale-100 group-hover:scale-103"
             loading="lazy"
           />
-          <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-white/80">
-              Team collections
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-10 text-center text-white flex flex-col items-center">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-amber-500 mb-2">
+              Team Collections
             </p>
-            <h3 className="mt-3 text-4xl font-black tracking-tight">Confident Looks</h3>
-            <span className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-white px-7 text-sm font-bold uppercase tracking-widest text-stone-950">
+            <h3 className="text-3xl font-black tracking-tight small:text-4xl text-stone-100">Confident Looks</h3>
+            <span className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-white px-8 text-xs font-bold uppercase tracking-widest text-stone-950 hover:bg-amber-500 hover:text-stone-950 hover:shadow-lg transition-all duration-300">
               Shop Now
             </span>
           </div>
         </LocalizedClientLink>
       </section>
 
-      <section className="content-container grid gap-10 py-16 text-center small:grid-cols-3 small:py-24">
-        {servicePromises.map((promise) => (
-          <div key={promise.title}>
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-stone-400">
-              DFI Standard
-            </p>
-            <h3 className="mt-3 text-2xl font-black tracking-tight">{promise.title}</h3>
-            <p className="mx-auto mt-4 max-w-sm text-sm leading-6 text-stone-500">
-              {promise.copy}
-            </p>
-            <LocalizedClientLink
-              href="/store"
-              className="mt-5 inline-block text-sm font-bold underline underline-offset-4"
+      {/* Service Promises Cards Grid */}
+      <section className="content-container py-16 small:py-24">
+        <div className="grid gap-8 small:grid-cols-3 max-w-6xl mx-auto">
+          {servicePromises.map((promise) => (
+            <div 
+              key={promise.title}
+              className="flex flex-col items-center text-center p-8 rounded-3xl bg-white border border-stone-100 hover:border-amber-500/20 hover:shadow-xl transition-all duration-300"
             >
-              Shop Collection
-            </LocalizedClientLink>
-          </div>
-        ))}
+              {promise.icon}
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600">
+                DFI Standard
+              </p>
+              <h3 className="mt-3 text-xl font-black tracking-tight text-stone-900">{promise.title}</h3>
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-stone-500">
+                {promise.copy}
+              </p>
+              <LocalizedClientLink
+                href="/store"
+                className="mt-6 inline-flex items-center text-xs font-bold uppercase tracking-wider text-amber-600 hover:text-amber-500 group-hover:underline underline-offset-4"
+              >
+                <span>Shop Collection</span>
+                <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </LocalizedClientLink>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="bg-stone-500 py-20 text-center text-white small:py-28">
-        <div className="content-container">
-          <p className="text-xs font-bold uppercase tracking-[0.42em] text-white/70">
+      {/* Bottom Philosophy Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 py-24 text-center text-white small:py-32 shadow-inner">
+        {/* Subtle decorative glow circles */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-amber-600/5 blur-[100px] pointer-events-none" />
+        
+        <div className="content-container relative z-10">
+          <p className="text-xs font-bold uppercase tracking-[0.45em] text-amber-500 mb-5">
             Our Philosophy
           </p>
-          <h2 className="mx-auto mt-5 max-w-5xl text-4xl font-black leading-tight tracking-tight small:text-6xl">
+          <h2 className="mx-auto max-w-5xl text-4xl font-black leading-tight tracking-tight small:text-6xl text-stone-50">
             We believe the uniform doesn’t come off when the shift ends.
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-white/80">
+          <div className="h-1.5 w-16 bg-amber-500 mx-auto rounded-full my-8" />
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-stone-300">
             Every stitch honors courage, sacrifice, and commitment — on duty, off duty, and in the community.
           </p>
-          <div className="mt-9 flex flex-col justify-center gap-3 small:flex-row">
-            <a
-              href="mailto:defendfreedomindustries@gmail.com"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/60 px-8 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-white hover:text-stone-700"
-            >
-              Contact Us
-            </a>
+          <div className="mt-12 flex flex-col justify-center items-center gap-4 small:flex-row">
             <LocalizedClientLink
               href="/store"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-bold uppercase tracking-widest text-stone-700 transition hover:bg-stone-100"
+              className="inline-flex h-13 items-center justify-center rounded-full bg-amber-500 px-10 text-sm font-bold uppercase tracking-widest text-stone-950 hover:bg-amber-400 transition-all duration-300 shadow-lg shadow-amber-500/20 w-full small:w-auto"
             >
               New Arrivals
             </LocalizedClientLink>
+            <a
+              href="mailto:defendfreedomindustries@gmail.com"
+              className="inline-flex h-13 items-center justify-center rounded-full border-2 border-white/20 px-10 text-sm font-bold uppercase tracking-widest text-white hover:bg-white hover:text-stone-950 hover:border-white transition-all duration-300 w-full small:w-auto"
+            >
+              Contact Us
+            </a>
           </div>
         </div>
       </section>
