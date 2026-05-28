@@ -4,7 +4,7 @@ import {
 } from "@medusajs/framework"
 import { Modules } from "@medusajs/framework/utils"
 
-export default async function orderCreatedHandler({
+export default async function orderConfirmationCustomerHandler({
   event: { data },
   container,
 }: SubscriberArgs<{ id: string }>) {
@@ -13,17 +13,15 @@ export default async function orderCreatedHandler({
   const orderModuleService = container.resolve(Modules.ORDER)
 
   try {
-    // Retrieve order with customer email
     const order = await orderModuleService.retrieveOrder(orderId, {
       select: ["id", "email", "display_id"],
     })
 
     if (!order?.email) {
-      console.warn(`Order ${orderId} has no email, skipping notification`)
+      console.warn(`Order ${orderId} has no email, skipping confirmation email`)
       return
     }
 
-    // Send order confirmation to customer
     await notificationModuleService.createNotifications({
       to: order.email,
       channel: "email",
@@ -32,6 +30,7 @@ export default async function orderCreatedHandler({
       resource_id: order.id,
       data: {
         order_id: order.id,
+        subject: `Order Confirmation #${order.display_id || order.id}`,
       },
     })
 
