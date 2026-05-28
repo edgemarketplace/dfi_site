@@ -6,8 +6,8 @@ const MEDUSA_BACKEND_URL =
 
 if (process.env.NODE_ENV === "production") {
   if (!process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL) {
-    throw new Error(
-      "NEXT_PUBLIC_MEDUSA_BACKEND_URL must be set in production to avoid falling back to localhost:9000"
+    console.warn(
+      "[WARNING] NEXT_PUBLIC_MEDUSA_BACKEND_URL must be set in production to avoid falling back to localhost:9000"
     )
   }
 
@@ -20,8 +20,8 @@ if (process.env.NODE_ENV === "production") {
   })()
 
   if (["localhost", "127.0.0.1", "0.0.0.0"].includes(backendHostname || "")) {
-    throw new Error(
-      "NEXT_PUBLIC_MEDUSA_BACKEND_URL cannot point to a local host in production"
+    console.warn(
+      "[WARNING] NEXT_PUBLIC_MEDUSA_BACKEND_URL cannot point to a local host in production"
     )
   }
 }

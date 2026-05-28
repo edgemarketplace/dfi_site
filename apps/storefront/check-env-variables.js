@@ -48,12 +48,11 @@ function checkEnvVariables() {
       ).hostname;
 
       if (["localhost", "127.0.0.1", "0.0.0.0"].includes(backendHostname)) {
-        console.error(
-          c.red.bold(
-            "\n🚫 Error: NEXT_PUBLIC_MEDUSA_BACKEND_URL cannot point to localhost in production\n"
+        console.warn(
+          c.yellow.bold(
+            "\n⚠️ Warning: NEXT_PUBLIC_MEDUSA_BACKEND_URL points to localhost in production mode. (This is okay for local production testing, but check before deploying to live environments.)\n"
           )
         );
-        process.exit(1);
       }
     } catch (error) {
       console.error(
