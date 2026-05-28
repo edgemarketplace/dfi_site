@@ -80,10 +80,10 @@ pnpm install
 2. Set up environment variables for the backend:
 
 ```bash
-cp apps/backend/.env.template apps/backend/.env
+cp apps/backend/.env.example apps/backend/.env
 ```
 
-3. Set the database URL in `apps/backend.env`:
+3. Set the database URL in `apps/backend/.env`:
 
 ```bash
 # Replace with actual database URL, make sure the database exists.
@@ -111,17 +111,18 @@ cd apps/backend
 pnpm dev
 ```
 
-7. Open the admin dashboard at `localhost:9000/app` and log in. Retrieve your publishable API key at Settings > Publishable API key.
+7. Retrieve your publishable API key from your Medusa admin environment. Note: this repo currently disables the bundled admin build in `apps/backend/medusa-config.ts`, so `localhost:9000/app` will not be available unless you re-enable it.
 
 8. Set up environment variables for the storefront:
 
 ```bash
-cp apps/storefront/.env.template apps/storefront/.env.local
+cp apps/storefront/.env.example apps/storefront/.env
 ```
 
-9. Update `apps/storefront/.env.local` with your Medusa publishable API key:
+9. Update `apps/storefront/.env` with your Medusa publishable API key and backend URL:
 
 ```bash
+NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9000
 NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_6c3...
 ```
 
@@ -142,15 +143,22 @@ pnpm dev
 
 ## Configuration
 
-The storefront is configured via environment variables in `apps/storefront/.env.local`:
+The storefront is configured via environment variables in `apps/storefront/.env`:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` | Publishable API key from your Medusa backend | — |
 | `NEXT_PUBLIC_MEDUSA_BACKEND_URL` | URL of your Medusa backend | `http://localhost:9000` |
 | `NEXT_PUBLIC_DEFAULT_REGION` | Default region country code | `dk` |
-| `NEXT_PUBLIC_BASE_URL` | Base URL of the storefront | `https://localhost:8000` |
+| `NEXT_PUBLIC_BASE_URL` | Base URL of the storefront | `http://localhost:8000` |
+| `NEXT_PUBLIC_VERCEL_URL` | Explicit deployment URL override for preview/prod hosting | — |
 | `NEXT_PUBLIC_STRIPE_KEY` | Stripe publishable key (optional) | — |
+
+## Production notes
+
+- `apps/storefront/package.json` uses the standalone Next.js server for `pnpm start`.
+- Stripe/checkout return flows rely on cookie persistence; auth/cart cookies are configured for production-safe `sameSite=lax`.
+- To use Supabase Storage as your Medusa file backend, configure the S3-compatible variables in `apps/backend/.env.production.template` and point `S3_ENDPOINT` to your Supabase S3 endpoint.
 
 ## Resources
 

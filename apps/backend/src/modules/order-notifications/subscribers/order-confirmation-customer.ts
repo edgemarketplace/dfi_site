@@ -46,5 +46,5 @@ export default async function orderConfirmationCustomerHandler({
 }
 
 export const config: SubscriberConfig = {
-  event: "order.placed",
+  event: "order.completed",
 }

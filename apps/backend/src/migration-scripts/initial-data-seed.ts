@@ -102,7 +102,7 @@ export default async function initial_data_seed({
           name: "Europe",
           currency_code: "eur",
           countries,
-          payment_providers: ["pp_system_default"],
+          payment_providers: ["pp_system_default", "pp_stripe"],
         },
       ],
     },
@@ -143,7 +143,7 @@ export default async function initial_data_seed({
       stock_location_id: stockLocation.id,
     },
     [Modules.FULFILLMENT]: {
-      fulfillment_provider_id: "manual_manual",
+      fulfillment_provider_id: "shippo_shippo",
     },
   });
 
@@ -209,7 +209,7 @@ export default async function initial_data_seed({
       {
         name: "Standard Shipping",
         price_type: "flat",
-        provider_id: "manual_manual",
+        provider_id: "shippo_shippo",
         service_zone_id: fulfillmentSet.service_zones[0].id,
         shipping_profile_id: shippingProfile.id,
         type: {
@@ -247,7 +247,7 @@ export default async function initial_data_seed({
       {
         name: "Express Shipping",
         price_type: "flat",
-        provider_id: "manual_manual",
+        provider_id: "shippo_shippo",
         service_zone_id: fulfillmentSet.service_zones[0].id,
         shipping_profile_id: shippingProfile.id,
         type: {

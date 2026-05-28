@@ -47,5 +47,5 @@ export default async function orderCreatedHandler({
 }
 
 export const config: SubscriberConfig = {
-  event: "order.placed",
+  event: "order.completed",
 }
