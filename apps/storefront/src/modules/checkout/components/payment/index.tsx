@@ -44,6 +44,10 @@ const Payment = ({
 
   const isOpen = searchParams.get("step") === "payment"
 
+  const stripePaymentMethods = (availablePaymentMethods || []).filter(
+    (pm) => !pm.id.startsWith("pp_system_default")
+  )
+
   const setPaymentMethod = async (method: string) => {
     setError(null)
     setSelectedPaymentMethod(method)
@@ -53,6 +57,17 @@ const Payment = ({
       })
     }
   }
+
+  // Auto-select first Stripe payment method if none selected
+  useEffect(() => {
+    if (!selectedPaymentMethod && stripePaymentMethods?.length > 0) {
+      const first = stripePaymentMethods[0]
+      setSelectedPaymentMethod(first.id)
+      if (isStripeLike(first.id)) {
+        initiatePaymentSession(cart, { provider_id: first.id })
+      }
+    }
+  }, [selectedPaymentMethod, stripePaymentMethods])
 
   const paidByGiftcard = !!(
     (cart as unknown as Record<string, unknown>)?.gift_cards && ((cart as unknown as Record<string, unknown>)?.gift_cards as unknown[])?.length > 0 && cart?.total === 0
@@ -141,13 +156,13 @@ const Payment = ({
       </div>
       <div>
         <div className={isOpen ? "block" : "hidden"}>
-          {!paidByGiftcard && availablePaymentMethods?.length && (
+          {!paidByGiftcard && stripePaymentMethods?.length && (
             <>
               <RadioGroup
                 value={selectedPaymentMethod}
                 onChange={(value: string) => setPaymentMethod(value)}
               >
-                {availablePaymentMethods.map((paymentMethod) => (
+                {stripePaymentMethods.map((paymentMethod) => (
                   <div key={paymentMethod.id}>
                     {isStripeLike(paymentMethod.id) ? (
                       <StripeCardContainer
