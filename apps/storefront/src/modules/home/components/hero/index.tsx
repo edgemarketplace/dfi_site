@@ -1,27 +1,5 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-
-const clientCategories = [
-  {
-    name: "Fire Department",
-    image: "https://www.defendfreedomindustries.com/web/image/4775-2a9997c1/15047.webp",
-  },
-  {
-    name: "Off-Duty Gear",
-    image: "https://www.defendfreedomindustries.com/web/image/4778-12d826bd/IMG_8622.webp",
-  },
-  {
-    name: "Explorers",
-    image: "https://www.defendfreedomindustries.com/web/image/4797-2e96479d/18520.webp",
-  },
-  {
-    name: "Baseball Teams",
-    image: "https://www.defendfreedomindustries.com/unsplash/FobzAZJGM9M/4780/baseball.jpg?unique=880e8d1d",
-  },
-  {
-    name: "Academy Apparel",
-    image: "https://www.defendfreedomindustries.com/web/image/4781-d08defc5/S%20Logo.webp",
-  },
-]
+import { listCategories } from "@lib/data/categories"
 
 const servicePromises = [
   {
@@ -53,24 +31,32 @@ const servicePromises = [
   },
 ]
 
-const Hero = () => {
+const Hero = async () => {
+  let categories: { id: string; name: string; handle: string }[] = []
+  try {
+    const cats = await listCategories({ limit: 20 })
+    categories = cats
+      .filter((c) => !c.parent_category)
+      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
+      .map((c) => ({ id: c.id, name: c.name, handle: c.handle }))
+  } catch (_e) {
+    console.warn("Hero: failed to load categories")
+  }
+
   return (
     <div className="bg-stone-50 text-stone-900 min-h-screen font-sans selection:bg-amber-500/30 selection:text-stone-900">
       {/* Hero Banner Section */}
       <section className="content-container py-8 small:py-12">
         <div className="relative min-h-[80vh] overflow-hidden rounded-[2.5rem] bg-stone-950 shadow-2xl group/hero">
-          {/* Background Image with Ken Burns zoom effect on hover */}
           <img
             src="https://www.defendfreedomindustries.com/web/image/4778-12d826bd/IMG_8622.webp"
             alt="Defend Freedom Industries custom apparel"
             className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-1000 ease-out scale-100 group-hover/hero:scale-105"
           />
-          {/* Dynamic dark gradient filter for text legibility */}
           <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-900/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent" />
           
           <div className="relative z-10 flex min-h-[80vh] max-w-3xl flex-col justify-center px-8 py-20 text-white small:px-20">
-            {/* Custom high-end text spacing */}
             <p className="mb-6 text-xs font-bold uppercase tracking-[0.45em] text-amber-500 animate-pulse">
               Modern Custom Apparel
             </p>
@@ -103,47 +89,43 @@ const Hero = () => {
       </section>
 
       {/* Shop By Category Section */}
-      <section className="content-container py-16 text-center small:py-24">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600 mb-3">
-            Explore the line
-          </p>
-          <h2 className="text-3xl font-black tracking-tight small:text-5xl text-stone-900 mb-6">
-            Shop By Category
-          </h2>
-          <div className="h-1 w-12 bg-amber-500 mx-auto rounded-full mb-6" />
-          <p className="text-sm leading-relaxed text-stone-500 mb-14">
-            Express your organization’s identity with standout apparel — clean design, reliable comfort, and a refined retail experience.
-          </p>
-        </div>
+      {categories.length > 0 && (
+        <section className="content-container py-16 text-center small:py-24">
+          <div className="max-w-2xl mx-auto">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600 mb-3">
+              Explore the line
+            </p>
+            <h2 className="text-3xl font-black tracking-tight small:text-5xl text-stone-900 mb-6">
+              Shop By Category
+            </h2>
+            <div className="h-1 w-12 bg-amber-500 mx-auto rounded-full mb-6" />
+            <p className="text-sm leading-relaxed text-stone-500 mb-14">
+              Express your organization&apos;s identity with standout apparel — clean design, reliable comfort, and a refined retail experience.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-2 gap-6 small:grid-cols-5 max-w-6xl mx-auto">
-          {clientCategories.map((category) => (
-            <LocalizedClientLink 
-              href="/store" 
-              key={category.name} 
-              className="group block relative p-4 rounded-3xl bg-white border border-stone-100 hover:border-amber-500/30 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
-            >
-              <div className="aspect-square overflow-hidden rounded-2xl bg-stone-100 shadow-inner">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="h-full w-full object-cover transition-transform duration-500 scale-100 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-              <p className="mt-4 text-xs font-bold uppercase tracking-wider text-stone-800 transition-colors duration-200 group-hover:text-amber-600">
-                {category.name}
-              </p>
-            </LocalizedClientLink>
-          ))}
-        </div>
-      </section>
+          <div className="grid grid-cols-2 gap-4 small:grid-cols-3 lg:grid-cols-4 max-w-5xl mx-auto">
+            {categories.map((category) => (
+              <LocalizedClientLink 
+                href={`/categories/${category.handle}`} 
+                key={category.id} 
+                className="group block relative p-3 rounded-3xl bg-white border border-stone-100 hover:border-amber-500/30 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
+              >
+                <div className="text-center">
+                  <p className="text-sm font-bold uppercase tracking-wider text-stone-800 transition-colors duration-200 group-hover:text-amber-600">
+                    {category.name}
+                  </p>
+                </div>
+              </LocalizedClientLink>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Highlights / Collections Grid */}
       <section className="content-container grid gap-8 py-10 small:grid-cols-2 small:py-16">
         <LocalizedClientLink
-          href="/store"
+          href="/categories/hfdonduty"
           className="group relative min-h-[460px] overflow-hidden rounded-[2rem] bg-stone-950 shadow-xl"
         >
           <img
@@ -165,7 +147,7 @@ const Hero = () => {
         </LocalizedClientLink>
 
         <LocalizedClientLink
-          href="/store"
+          href="/categories/stars"
           className="group relative min-h-[460px] overflow-hidden rounded-[2rem] bg-stone-950 shadow-xl"
         >
           <img
@@ -219,7 +201,6 @@ const Hero = () => {
 
       {/* Bottom Philosophy Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 py-24 text-center text-white small:py-32 shadow-inner">
-        {/* Subtle decorative glow circles */}
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-amber-600/5 blur-[100px] pointer-events-none" />
         
@@ -228,7 +209,7 @@ const Hero = () => {
             Our Philosophy
           </p>
           <h2 className="mx-auto max-w-5xl text-4xl font-black leading-tight tracking-tight small:text-6xl text-stone-50">
-            We believe the uniform doesn’t come off when the shift ends.
+            We believe the uniform doesn&apos;t come off when the shift ends.
           </h2>
           <div className="h-1.5 w-16 bg-amber-500 mx-auto rounded-full my-8" />
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-stone-300">

@@ -37,46 +37,57 @@ export default function CategoryTemplate({
   getParents(category)
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
+    <div className="flex flex-col small:flex-row small:items-start py-6 content-container">
       <RefinementList sortBy={sort} data-testid="sort-by-container" />
       <div className="w-full">
-        <div className="flex flex-row mb-8 text-2xl-semi gap-4">
+        {/* Breadcrumb */}
+        <div className="flex flex-row mb-4 text-sm gap-2 text-ui-fg-subtle">
+          <LocalizedClientLink href="/store" className="hover:text-amber-600">
+            Shop All
+          </LocalizedClientLink>
+          <span>/</span>
           {parents &&
             parents.map((parent) => (
               <span key={parent.id} className="text-ui-fg-subtle">
                 <LocalizedClientLink
-                  className="mr-4 hover:text-black"
+                  className="hover:text-amber-600 mr-2"
                   href={`/categories/${parent.handle}`}
-                  data-testid="sort-by-link"
                 >
                   {parent.name}
                 </LocalizedClientLink>
-                /
+                <span>/</span>
               </span>
             ))}
-          <h1 data-testid="category-page-title">{category.name}</h1>
+          <span className="text-stone-900 font-medium">{category.name}</span>
         </div>
+
+        <h1 className="text-3xl font-black tracking-tight text-stone-900 mb-2" data-testid="category-page-title">
+          {category.name}
+        </h1>
+
         {category.description && (
-          <div className="mb-8 text-base-regular">
+          <div className="mb-8 text-base-regular text-stone-600">
             <p>{category.description}</p>
           </div>
         )}
-        {category.category_children && (
-          <div className="mb-8 text-base-large">
-            <ul className="grid grid-cols-1 gap-2">
+
+        {/* Child categories */}
+        {category.category_children && category.category_children.length > 0 && (
+          <div className="mb-8">
+            <ul className="flex flex-wrap gap-2">
               {category.category_children?.map((c) => (
                 <li key={c.id}>
                   <InteractiveLink href={`/categories/${c.handle}`}>
-                    {c.name}
+                    <span className="inline-flex items-center px-4 py-2 rounded-full bg-stone-100 text-sm font-medium text-stone-700 hover:bg-amber-100 hover:text-amber-800 transition-colors">
+                      {c.name}
+                    </span>
                   </InteractiveLink>
                 </li>
               ))}
             </ul>
           </div>
         )}
+
         <Suspense
           fallback={
             <SkeletonProductGrid
