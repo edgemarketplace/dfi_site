@@ -45,8 +45,29 @@ const Hero = async () => {
 
   return (
     <div className="bg-stone-50 text-stone-900 min-h-screen font-sans selection:bg-amber-500/30 selection:text-stone-900">
+      {/* Shop By Category — horizontal strip above hero */}
+      {categories.length > 0 && (
+        <section className="content-container pt-6 pb-4">
+          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide pb-2">
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600 shrink-0">
+              Shop By Category
+            </span>
+            <div className="h-px flex-1 bg-stone-200" />
+            {categories.map((category) => (
+              <LocalizedClientLink
+                key={category.id}
+                href={`/categories/${category.handle}`}
+                className="shrink-0 inline-flex items-center px-4 py-2 rounded-full border border-stone-200 text-xs font-bold uppercase tracking-wider text-stone-700 hover:border-amber-500 hover:text-amber-700 transition-all duration-200 whitespace-nowrap"
+              >
+                {category.name}
+              </LocalizedClientLink>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Hero Banner Section */}
-      <section className="content-container py-8 small:py-12">
+      <section className="content-container pb-8 small:pb-12">
         <div className="relative min-h-[80vh] overflow-hidden rounded-[2.5rem] bg-stone-950 shadow-2xl group/hero">
           <img
             src="https://www.defendfreedomindustries.com/web/image/4778-12d826bd/IMG_8622.webp"
@@ -87,40 +108,6 @@ const Hero = async () => {
           </div>
         </div>
       </section>
-
-      {/* Shop By Category Section */}
-      {categories.length > 0 && (
-        <section className="content-container py-16 text-center small:py-24">
-          <div className="max-w-2xl mx-auto">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600 mb-3">
-              Explore the line
-            </p>
-            <h2 className="text-3xl font-black tracking-tight small:text-5xl text-stone-900 mb-6">
-              Shop By Category
-            </h2>
-            <div className="h-1 w-12 bg-amber-500 mx-auto rounded-full mb-6" />
-            <p className="text-sm leading-relaxed text-stone-500 mb-14">
-              Express your organization&apos;s identity with standout apparel — clean design, reliable comfort, and a refined retail experience.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 small:grid-cols-3 lg:grid-cols-4 max-w-5xl mx-auto">
-            {categories.map((category) => (
-              <LocalizedClientLink 
-                href={`/categories/${category.handle}`} 
-                key={category.id} 
-                className="group block relative p-3 rounded-3xl bg-white border border-stone-100 hover:border-amber-500/30 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
-              >
-                <div className="text-center">
-                  <p className="text-sm font-bold uppercase tracking-wider text-stone-800 transition-colors duration-200 group-hover:text-amber-600">
-                    {category.name}
-                  </p>
-                </div>
-              </LocalizedClientLink>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Highlights / Collections Grid */}
       <section className="content-container grid gap-8 py-10 small:grid-cols-2 small:py-16">
